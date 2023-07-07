@@ -8,4 +8,4 @@ for i in range(c):
         if j > avg:
             cnt += 1
     rate = '{:.3f}'.format(round(cnt/num[0]*100, 3))
-    print(rate + "%")
+    print(rate, "%")
