@@ -1,11 +1,18 @@
-from itertools import permutations
 import sys
 
-n, m = map(int, sys.stdin.readline().split())
-a = [i+1 for i in range(n)]
-result = permutations(a, m)
 
-for i in result:
-    for j in i:
-        print(j, end=" ")
-    print("")
+def sol():
+    if len(result) == m:
+        print(" ".join(map(str, result)))
+        return
+    else:
+        for i in range(1, n+1):
+            if i not in result:
+                result.append(i)
+                sol()
+                result.pop()
+
+
+result = []
+n, m = map(int, sys.stdin.readline().split())
+sol()
