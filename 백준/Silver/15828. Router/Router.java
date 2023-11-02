@@ -3,30 +3,32 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
-
-        int num = sc.nextInt();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int num = Integer.parseInt(br.readLine());
 
         Queue<Integer> q = new LinkedList<>();
 
-        while(true){
-            int p = sc.nextInt();
-            if (q.size() < num){
-                if(p == -1) break;
-                else if (p == 0 && !q.isEmpty()){
-                    q.remove();
-                } else{
-                    q.offer(p);
-                }
+        while (true) {
+            int p = Integer.parseInt(br.readLine());
+            if (p == -1) break;
+            if (p == 0) {
+                q.remove();
+            } else if (num > q.size()) {
+                q.add(p);
             }
+
         }
 
-        if(!q.isEmpty()){
-            while(!q.isEmpty()){
-                System.out.print(q.poll() + " ");
+        if (!q.isEmpty()) {
+            for (int i : q) {
+                bw.write(i + " ");
             }
-        } else{
-            System.out.println("empty");
+        } else {
+            bw.write("empty");
         }
+
+        br.close();
+        bw.close();
     }
 }
