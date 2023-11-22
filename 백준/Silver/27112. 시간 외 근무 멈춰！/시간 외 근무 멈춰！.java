@@ -5,16 +5,17 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
+       
+        int num = Integer.parseInt(br.readLine());
         StringTokenizer st;
         PriorityQueue<Job> jobs = new PriorityQueue<>(((o1, o2) -> o1.d - o2.d));
 
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < num; i++) {
             st = new StringTokenizer(br.readLine());
-            int d = Integer.parseInt(st.nextToken());
-            int t = Integer.parseInt(st.nextToken());
+            int day = Integer.parseInt(st.nextToken());
+            int time = Integer.parseInt(st.nextToken());
 
-            jobs.add(new Job(d, t));
+            jobs.add(new Job(day, time));
         }
 
         int result = 0;
@@ -26,32 +27,33 @@ public class Main {
             Job job = jobs.poll();
 
             limit = job.d;
-            limit -= (job.d / 7) * 2;  //평일
+            limit -= (job.d / 7) * 2;
 
             if (job.d % 7 == 6) limit--;
 
-            workDay += job.t;   //해야할 것추가
+            workDay += job.t;
 
-            if (workDay > limit) {    //해야할게 기간보다 많을 겨우
-                result += workDay - limit;  //업무를 처리하고 남은 것들을 result에 추가함
+            if (workDay > limit) {
+                result += workDay - limit;
 
-                workDay = limit;    //처리한 것들은 workDay에 담아둬야함
+                workDay = limit;
             }
 
-            if (result > job.d) { //마감기한보다 처리할게 더 많다면  
+            if (result > job.d) {
                 result = -1;
                 break;
             }
 
         }
-        System.out.println(result);
 
+        System.out.println(result);
+        br.close();
 
     }
 
     static class Job {
-        int d; //마감기한
-        int t; //걸리는시간
+        int d;
+        int t;
 
         public Job(int d, int t) {
             this.d = d;
