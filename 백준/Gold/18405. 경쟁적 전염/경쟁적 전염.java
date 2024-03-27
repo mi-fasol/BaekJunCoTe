@@ -2,10 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    //    static boolean[] visited;
     static ArrayList<ArrayList<Integer>> graph;
-
-//    static int[][] graph;
 
     static int[] dx = {0, 0, -1, 1};
     static int[] dy = {-1, 1, 0, 0};
@@ -52,16 +49,22 @@ public class Main {
         bw.close();
         br.close();
     }
-
-    public static void bfs(int n) {
+    
+    public static Queue<int[]> findKIndex(int n) {
         Queue<int[]> q = new LinkedList<>();
 
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++) {
                 if (graph.get(i).get(j) == n)
-                    q.add(new int[]{i, j});
+                    q.offer(new int[]{i, j});
             }
 
+        return q;
+    }
+
+    public static void bfs(int n) {
+        Queue<int[]> q = findKIndex(n);
+        
         while (!q.isEmpty()) {
             int[] f = q.poll();
             int fx = f[0];
