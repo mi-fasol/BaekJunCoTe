@@ -47,25 +47,27 @@ public class Main {
         queue.offer(new Loc(0, 0));
         visited[0][0] = true;
         int count = -1;
-        int size = 0;
+
         while (!queue.isEmpty()) {
             count++;
-            size = queue.size();
+            int size = queue.size();
             for (int step = 0; step < size; step++) {
                 Loc temp = queue.poll();
-                
-                if (map[temp.r][temp.c] == 2) {
-                    CNT = count + N - 1 - temp.r + M - 1 - temp.c;
+
+                int a = temp.r;
+                int b = temp.c;
+
+                if (map[a][b] == 2) {
+                    CNT = count + N - 1 - a + M - 1 - b;
                     continue;
-                }
-                else if (temp.r == N - 1 && temp.c == M - 1) {
+                } else if (a == N - 1 && b == M - 1) {
                     CNT = Math.min(CNT, count);
                     return;
                 }
 
                 for (int i = 0; i < 4; i++) {
-                    int nr = temp.r + dx[i];
-                    int nc = temp.c + dy[i];
+                    int nr = a + dx[i];
+                    int nc = b + dy[i];
 
                     if (isIn(nr, nc) && !visited[nr][nc] && map[nr][nc] != 1) {
                         queue.offer(new Loc(nr, nc));
