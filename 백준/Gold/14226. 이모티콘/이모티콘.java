@@ -9,11 +9,9 @@ public class Main {
 
         N = Integer.parseInt(br.readLine());
 
-        dp = new int[N + 1];
+        dp = new int[2001];
 
-        int[] dp = new int[4001];
-
-        for (int i = 0; i <= 4000; i++)
+        for (int i = 0; i <= 2000; i++)
             dp[i] = i;
 
         for (int i = 1; i <= 1000; i++) {
@@ -24,7 +22,6 @@ public class Main {
             for (int j = 1000; j >= 2; j--)
                 dp[j] = Math.min(dp[j + 1] + 1, dp[j]);
         }
-
         System.out.println(dp[N]);
     }
 }
