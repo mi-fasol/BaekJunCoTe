@@ -3,9 +3,9 @@ import java.util.*;
 
 public class Main {
     static int V, E;
-    static List<List<int[]>> graph = new ArrayList<>();
     static PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
-    static int[] parent;
+    static List<List<int[]>> graph = new ArrayList<>();
+    static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -14,11 +14,10 @@ public class Main {
 
         V = Integer.parseInt(st.nextToken());
         E = Integer.parseInt(st.nextToken());
-        parent = new int[V + 1];
+        visited = new boolean[V + 1];
 
         for (int i = 0; i <= V; i++) {
             graph.add(new ArrayList<>());
-            parent[i] = i;
         }
 
         for (int i = 1; i <= E; i++) {
@@ -27,37 +26,32 @@ public class Main {
             int b = Integer.parseInt(st.nextToken());
             int w = Integer.parseInt(st.nextToken());
 
-            pq.offer(new int[]{a, b, w});
+            graph.get(a).add(new int[]{b, w});
+            graph.get(b).add(new int[]{a, w});
         }
 
-        kruskal();
+        System.out.println(prim());
     }
 
-    public static void kruskal() {
-        int sum = 0;
+    public static int prim() {
+        int result = 0;
+        pq.offer(new int[]{1, 1, 0});
 
         while (!pq.isEmpty()) {
             int[] cur = pq.poll();
 
-            if (find(cur[0]) != find(cur[1])) {
-                union(cur[0], cur[1]);
-                sum += cur[2];
+            if (visited[cur[1]]) continue;
+
+            visited[cur[1]] = true;
+            result += cur[2];
+
+            for (int[] next : graph.get(cur[1])) {
+                if (!visited[next[0]]) {
+                    pq.offer(new int[]{cur[1], next[0], next[1]});
+                }
             }
         }
 
-        System.out.println(sum);
-    }
-
-    public static void union(int a, int b) {
-        a = find(a);
-        b = find(b);
-
-        if (a < b) parent[b] = a;
-        else parent[a] = b;
-    }
-
-    public static int find(int x) {
-        if (parent[x] == x) return x;
-        else return find(parent[x]);
+        return result;
     }
 }
