@@ -4,9 +4,7 @@ import java.util.*;
 public class Main {
     static int N, res;
     static String[] strs;
-    static boolean[] visited = new boolean[10];
     static HashMap<Character, Integer> map = new HashMap<>();
-    static ArrayList<Character> list = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,38 +16,19 @@ public class Main {
         for (int i = 0; i < N; i++) {
             strs[i] = br.readLine();
             for(int j = 0; j < strs[i].length(); j++) {
-                if(!list.contains(strs[i].charAt(j))) {
-                    list.add(strs[i].charAt(j));
-                }
+                map.put(strs[i].charAt(j), (int) Math.pow(10, strs[i].length() - j - 1) + map.getOrDefault(strs[i].charAt(j), 0));
             }
         }
 
-        combination(0);
+        List<Character> list = new ArrayList<>(map.keySet());
+        Collections.sort(list, (o1, o2) -> map.get(o2) - map.get(o1));
+
+        int num = 9;
+
+        for(Character c : list) {
+            res += map.get(c) * num--;
+        }
 
         System.out.println(res);
-
-    }
-
-    public static void combination(int idx) {
-        if(idx == list.size()) {
-            int sum = 0;
-            for (int i = 0; i < N; i++) {
-                int num = 0;
-                for (int j = 0; j < strs[i].length(); j++) {
-                    num = num * 10 + map.get(strs[i].charAt(j));
-                }
-                sum += num;
-            }
-            res = Math.max(res, sum);
-            return;
-        }
-
-        for (int i = 0; i < 10; i++) {
-            if(visited[i]) continue;
-            visited[i] = true;
-            map.put(list.get(idx), i);
-            combination(idx + 1);
-            visited[i] = false;
-        }
     }
 }
