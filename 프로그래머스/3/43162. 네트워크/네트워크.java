@@ -20,35 +20,12 @@ class Solution {
             if(!isChecked[i]){
                 isChecked[i] = true;
                 bfs(i);
-//                 if(graph.get(i).size() == 0) {
-//                     network++;
-//                     break;
-//                 }
-                
-                // for(int next : graph.get(i)) {
-                //     dfs(next);
-                // }
             }
         }
         
         return network;
     }
-    
-    public static void dfs(int computer) {
-        if(isChecked[computer]) {
-            return;
-        }
-        
-        for(int next : graph.get(computer)) {
-            if(isChecked[next]) continue;
-            isChecked[next] = true;
-            dfs(next);
-        }
-        
-        network++;
-        return;
-    }
-    
+   
     public static void bfs(int start) {
         Queue<Integer> q = new LinkedList<>();
         q.offer(start);
