@@ -5,7 +5,7 @@ public class Main {
     static int N, M;
     static int[] rank;
     static ArrayList<ArrayList<Integer>> students = new ArrayList<>();
-    static ArrayList<Integer> result = new ArrayList<>();
+    static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -13,7 +13,7 @@ public class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        rank = new int[N+1];
+        rank = new int[N + 1];
 
         for (int i = 0; i <= N; i++) {
             students.add(new ArrayList<>());
@@ -33,12 +33,11 @@ public class Main {
                 rank[next]++;
             }
         }
-        
+
         topologicalSort();
-
-        br.close();
-
+        System.out.println(sb);
     }
+
     public static void topologicalSort() {
         Queue<Integer> q = new LinkedList<>();
 
@@ -50,7 +49,7 @@ public class Main {
 
         while (!q.isEmpty()) {
             int cur = q.poll();
-            result.add(cur);
+            sb.append(cur).append(" ");
 
             for (int i = 0; i < students.get(cur).size(); i++) {
                 int next = students.get(cur).get(i);
@@ -60,10 +59,6 @@ public class Main {
                     q.offer(next);
                 }
             }
-        }
-
-        for (Integer integer : result) {
-            System.out.print(integer + " ");
         }
     }
 }
